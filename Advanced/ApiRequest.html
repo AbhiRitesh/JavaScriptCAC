@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+            background-color: #212121;
+            font-family: Arial, sans-serif;
+            color: black;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+        }
+        #card {
+            background-color: #fff;
+            height: 300px;
+            width: 300px;
+            border-radius: 15px;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        #avatar {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body style="background-color: #212121;">
+
+    <div id="card">
+        <img id="avatar" src="" alt="Avatar">
+        <p id="followers"></p>
+    </div>
+</body>
+<script>
+    const requestUrl = 'https://api.github.com/users/AbhiRitesh'
+    const xhr = new XMLHttpRequest()
+    xhr.open('GET', requestUrl)  //Track one time 
+    xhr.onreadystatechange = function(){  //for continious track
+        console.log(xhr.readyState)
+        if(xhr.readyState === 4){
+            const data = JSON.parse(this.responseText)
+            const avatarUrl = data.avatar_url
+            const followersCount = data.followers
+            document.getElementById('avatar').src = avatarUrl
+                document.getElementById('followers').textContent = `Followers: ${followersCount}`
+        }
+    }
+    xhr.send();
+    document.querySelector('#card')
+</script>
+</html>
